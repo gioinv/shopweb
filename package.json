@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "local": "cross-env NODE_ENV=local NUXT_PORT=4004 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "generate:local": "cross-env NODE_ENV=local nuxt generate",
+    "generate:production": "cross-env NODE_ENV=production nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "eslint --ext .ts,.js,.vue ."
   },
@@ -16,6 +17,7 @@
     "@nuxtjs/firebase": "^7.5.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
+    "cross-env": "^7.0.3",
     "firebase": "^8.3.1",
     "nuxt": "^2.15.3",
     "nuxt-property-decorator": "^2.9.1"
