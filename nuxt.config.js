@@ -1,6 +1,9 @@
 import colors from 'vuetify/es5/util/colors'
+const environment = process.env.NODE_ENV || 'local'
+const envSet = require(`./configs/env.${environment}.js`)
 
 export default {
+  env: envSet,
   ssr: false,
 
   target: 'static',

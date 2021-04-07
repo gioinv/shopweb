@@ -9,7 +9,7 @@
         @keydown.enter="onSearch"
       />
       <p v-if="keyword.length>0">
-        Result {{ items.length }}
+        Result {{ items.length }}xxxx
       </p>
     </div>
     <v-row justify="center" align="center">
@@ -47,7 +47,7 @@ export default class MyStore extends Vue {
   itemsClone:Array<any> = [];
 
   public getData (): void {
-    this.$axios.get(`https://shopapp-308706.web.app/ZQUESTION.json?timestamp=${new Date().getTime()}`)
+    this.$axios.get(`${window.location}/ZQUESTION.json?timestamp=${new Date().getTime()}`)
     // this.$axios.get(`/ZQUESTION.json?timestamp=${new Date().getTime()}`)
       .then((response) => {
         const rs = response.data
