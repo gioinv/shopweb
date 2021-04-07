@@ -9,7 +9,7 @@
         @keydown.enter="onSearch"
       />
       <p v-if="keyword.length>0">
-        Result {{ items.length }}
+        Result {{ items.length }}xxxx
       </p>
     </div>
     <v-row justify="center" align="center">
