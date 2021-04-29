@@ -22,10 +22,15 @@ export default {
   },
 
   css: [
+    '@/assets/main.scss'
   ],
 
   plugins: [
-    // '@/plugins/firePlugin'
+    // '@/plugins/sticky'
+    { src: '~/plugins/vuex-persist', ssr: false },
+    '@/plugins/validation',
+    '@/mixins/Inject'
+
   ],
 
   components: true,
@@ -33,29 +38,32 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify'
+
   ],
 
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/firebase'
-    // '@nuxtjs/auth-next'
+    ['nuxt-i18n',
+      {
+        locales: [
+          {
+            code: 'en',
+            name: 'English',
+            file: 'en.json'
+          },
+          {
+            code: 'vi',
+            name: 'Vietnam',
+            file: 'vi.json'
+          }
+        ],
+        lazy: true,
+        langDir: 'locales',
+        defaultLocale: 'vi'
+      }
+    ]
   ],
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyBEkVAZV71_i7_0u97Fgaj8ODquD_kLXBQ',
-      authDomain: 'shopapp-308706.firebaseapp.com',
-      projectId: 'shopapp-308706',
-      storageBucket: 'shopapp-308706.appspot.com',
-      messagingSenderId: '894386807325',
-      appId: '1:894386807325:web:296658a0f2ab262bba5cf4',
-      measurementId: 'G-PSRVKNEVZV'
-    },
-    services: {
-      auth: true,
-      firestore: true
-    }
-  },
 
   axios: {},
 
@@ -64,16 +72,18 @@ export default {
       lang: 'en'
     }
   },
+  router: {
+    // middleware: 'SyncVersion'
+  },
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
       themes: {
-        dark: {
-          primary: colors.blue.darken2,
+        light: {
+          primary: '#333',
           accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          secondary: '#F7941D',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
