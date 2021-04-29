@@ -1,0 +1,33 @@
+{   
+  "message": "Xin chao1", 
+  "header": {
+    "position": "Vị trí shop",
+    "my_account": "Tài khoản của tôi"
+  },
+  "common": {
+    "login": "Đăng nhập",
+    "my_account": "Tài khoản của tôi",
+    "user": "Người dùng",
+    "category":"Danh mục",
+    "sub_category":"Danh mục con",
+    "product":"Sản phẩm",
+    "order":"Đơn hàng",
+    "save":"Lưu",
+    "add":"Thêm",
+    "edit":"Chỉnh sửa",
+    "delete":"Xóa",
+    "confirm_msg":"Bạn chắc chắc muốn tiếp tục?",
+    "save_success":"Lưu thành công.",
+    "delete_success":"Xóa thành công."
+  },
+  "dialog": {
+    "confirm": "{0} xác nhận",
+    "inform": "{0} thông báo"
+  },
+  "admin": {
+    "category": {
+      "add":"Thêm danh mục"
+    }
+  }
+
+}

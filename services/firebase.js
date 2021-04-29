@@ -18,10 +18,12 @@ if (!firebase.apps.length) {
 }
 
 export const db = firebase.firestore()
+db.settings({ ignoreUndefinedProperties: true })
+export const firebaseIns = firebase
 export const Auth = firebase.auth()
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
 
-/* if (window.location.hostname === 'localhost') {
+if (window.location.hostname === 'localhost') {
   db.useEmulator('localhost', 8080)
-} */
+}
