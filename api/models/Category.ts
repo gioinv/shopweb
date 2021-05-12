@@ -1,18 +1,14 @@
-/*
-export default class Category {
+
+export class Category {
   private id?:string
   private name:string;
   private parentId?:string
-
-  constructor () {
-    this.name = ''
-  }
 
   public getId (): string|undefined {
     return this.id
   }
 
-  public setId (id?: string): void {
+  public setId (id: string): void {
     this.id = id
   }
 
@@ -20,7 +16,7 @@ export default class Category {
     return this.name
   }
 
-  public setName (name: string = ''): void {
+  public setName (name: string): void {
     this.name = name
   }
 
@@ -28,8 +24,11 @@ export default class Category {
     return this.parentId
   }
 
-  public setParentId (parentId?: string): void {
+  public setParentId (parentId: string): void {
     this.parentId = parentId
   }
+
+  constructor () {
+    this.name = ''
+  }
 }
- */

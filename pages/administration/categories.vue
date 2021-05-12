@@ -167,9 +167,10 @@ import MTextField from '@/components/controls/MTextField'
 // @ts-ignore
 import MFormDialog from '@/components/MFormDialog'
 import { CategoryStore } from '@/utils/access-store'
-import CategoryDal from '~/services/dal/CategoryDal'
+import { Inject } from 'inversify-props'
 import Helper from '~/utils/Helper'
-import Category from '~/services/entities/Category'
+import type { ICategoryService } from '~/api/services'
+import { Category } from '~/api/models'
 
 @Component({
   components: {
@@ -183,28 +184,30 @@ import Category from '~/services/entities/Category'
 export default class Categories extends mixins(BaseP, ListMixin, Form, PageMethods) {
   pageTitle:string='Danh mục';
 
+  @Inject()
+  private categoryService!: ICategoryService
+
   search:string='';
+
   dialogTitle:string='';
   isDialog:boolean = false;
   isEdit:boolean = false;
   isSaving:boolean = false;
-  categoryDal: CategoryDal = new CategoryDal();
   selection:Array<object> = []
   active:string[] = []
 
   @CategoryStore.Action('add') insertCategory
   @CategoryStore.Action('update') updateCategory
   @CategoryStore.Action('delete') deleteCategory
-  @CategoryStore.Action('setList') loadCategory
   @CategoryStore.Action('deleteMulti') deleteCategories
   @CategoryStore.Getter('getCategoryWSub') categoryList
+  @CategoryStore.Action('setList') setCategory
 
   form = {
     name: ''
   }
 
-  formItem={
-  }
+  formItem:Category|undefined
 
   items= [
     {
@@ -224,7 +227,9 @@ export default class Categories extends mixins(BaseP, ListMixin, Form, PageMetho
     this.isDialog = true
     this.isEdit = true
     this.form.name = item.name
-    this.formItem = item
+
+    this.formItem = new Category()
+    this.formItem.setId(item.id)
 
     this.cloneForm()
   }
@@ -236,8 +241,10 @@ export default class Categories extends mixins(BaseP, ListMixin, Form, PageMetho
     this.isDialog = true
     this.resetForm()
 
+    this.formItem = new Category()
+
     if (subItem && subItem.id) {
-      this.formItem.parentId = subItem.id
+      this.formItem?.setParentId(subItem.id)
     }
   }
 
@@ -245,24 +252,17 @@ export default class Categories extends mixins(BaseP, ListMixin, Form, PageMetho
     if (this.isValidForm()) {
       this.isSaving = true
 
-      const cate = new Category()
-      cate.setName(this.form.name)
-
+      this.formItem?.setName(this.form.name)
       if (!this.isEdit) {
-        if (this.formItem.parentId) {
-          cate.setParentId(this.formItem.parentId)
-        }
-
-        await this.insertCategory(cate)
+        this.insertCategory(this.formItem)
       } else {
-        cate.setId(this.formItem.id)
-        await this.updateCategory(cate)
+        await this.updateCategory(this.formItem)
       }
 
       this.showSnackbar(this.getMessage('common.save_success'))
       this.isDialog = false
       this.isSaving = false
-      this.formItem = {}
+      this.formItem = undefined
       this.form.name = ''
     }
   }
@@ -298,7 +298,8 @@ export default class Categories extends mixins(BaseP, ListMixin, Form, PageMetho
 
   created () {
     this.cloneForm()
-    this.loadCategory()
+
+    this.setCategory()
   }
 }
 </script>

@@ -27,6 +27,7 @@ export default {
 
   plugins: [
     // '@/plugins/sticky'
+    '@/app.container',
     { src: '~/plugins/vuex-persist', ssr: false },
     '@/plugins/validation',
     '@/mixins/Inject'

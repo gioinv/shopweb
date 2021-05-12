@@ -2,7 +2,8 @@ import VuexPersistence from 'vuex-persist'
 
 export default ({ store }) => {
   new VuexPersistence({
-    key: 'shopweb',
-    storage: window.localStorage
+    key: 'shopweblocal',
+    // reducer: state => ({ common: state.modules.CommonStore }),
+    storage: window.sessionStorage
   }).plugin(store)
 }

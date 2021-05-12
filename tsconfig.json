@@ -15,6 +15,7 @@
     "strict": true,
     "noEmit": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
       "~/*": [
@@ -24,6 +25,7 @@
         "./*"
       ]
     },
+    "typeRoots": ["node_modules/@types"],
     "types": [
       "@nuxt/types",
       "@nuxtjs/axios",

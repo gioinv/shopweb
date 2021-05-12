@@ -6,7 +6,7 @@
           <v-icon size="20" color="secondary">
             mdi-headphones
           </v-icon> <nuxt-link to="/">
-            0984887878 {{ scrolled }}
+            0984887878
           </nuxt-link><br>
           <v-icon size="20" color="secondary">
             mdi-email-outline
@@ -27,19 +27,35 @@
             <li>
               <v-icon size="20" color="secondary" class="top-icon">
                 mdi-account-outline
-              </v-icon> <nuxt-link to="/">
+              </v-icon> <nuxt-link to="/user/login">
                 {{ $t('header.my_account') }}
               </nuxt-link>
             </li>
-            <li class="no-border">
+            <li v-if="!isLogged" class="no-border">
               <v-icon size="20" color="secondary" class="top-icon">
                 mdi-power
               </v-icon>
-              <nuxt-link to="/">
+              <nuxt-link to="/user/login">
                 {{ $t('common.login') }}
               </nuxt-link>
             </li>
+            <li v-else class="no-border">
+              <v-icon size="20" color="secondary" class="top-icon">
+                mdi-logout-variant
+              </v-icon>
+              <nuxt-link to="/user/logout/?redirect=/user/login">
+                {{ $t('common.logout') }}
+              </nuxt-link>
+            </li>
           </ul>
+          <div v-if="isAdmin">
+            <v-icon size="20" color="secondary" class="top-icon">
+              mdi-account-settings-outline
+            </v-icon>
+            <nuxt-link to="/administration/">
+              Administration panel
+            </nuxt-link>
+          </div>
         </v-col>
       </v-row>
       <v-divider />
@@ -158,9 +174,11 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <div style="background:#f5f5f5;height:100%">
+        <v-container>
+          <nuxt />
+        </v-container>
+      </div>
     </v-main>
     <v-navigation-drawer
       v-model="rightDrawer"
@@ -179,25 +197,34 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <v-divider />
     <v-footer
       :absolute="!fixed"
       app
+      color="light-grey"
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
-    </div>
+    <m-snackbar />
   </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, mixins, Watch } from 'nuxt-property-decorator'
+import MSnackbar from '@/components/controls/MSnackbar.vue'
+import { PageMethods } from '@/mixins/Common'
+import { Inject } from 'inversify-props'
+import { UserStore } from '~/utils/access-store'
+import type { IAuthService } from '~/api/services'
+import 'reflect-metadata'
 
 @Component({
   components: {
-
+    MSnackbar
   }
+
 })
-export default class MyStore extends Vue {
+export default class MyStore extends mixins(PageMethods) {
   icon:string = '';
   isSubMenu:boolean = false;
   openMenu:boolean = false;
@@ -206,7 +233,13 @@ export default class MyStore extends Vue {
   rightDrawer:boolean = false;
   right:boolean = false;
   fixed:boolean = false;
-  scrolled:boolean = false;
+
+   @Inject()
+  private authService!: IAuthService
+
+  @UserStore.Action('logout') logout
+  @UserStore.Getter('isAdmin') isAdmin
+  @UserStore.Getter('isLogged') isLogged
 
   items:Array<Object> = [];
   menu:Array<Object> = [];
@@ -237,10 +270,7 @@ export default class MyStore extends Vue {
 
   created () {
     this.menu = [
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' }
+
     ]
   }
 

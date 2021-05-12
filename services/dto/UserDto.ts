@@ -1,4 +1,4 @@
-
+/*
 export default class CategoryDto {
   public id:string
   public name:string;
@@ -12,3 +12,4 @@ export default class CategoryDto {
     this.children = []
   }
 }
+ */

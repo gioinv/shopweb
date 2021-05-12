@@ -19,9 +19,11 @@
     "core-js": "^3.9.1",
     "cross-env": "^7.0.3",
     "firebase": "^8.3.1",
+    "inversify-props": "^2.2.6",
     "nuxt": "^2.15.3",
     "nuxt-i18n": "^6.23.0",
     "nuxt-property-decorator": "^2.9.1",
+    "reflect-metadata": "^0.1.13",
     "vee-validate": "^3.4.5",
     "vuex-module-decorators": "^1.0.1",
     "vuex-persist": "^3.1.3"

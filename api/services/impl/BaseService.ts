@@ -1,7 +1,8 @@
-/*
-import { db, firebaseIns } from '@/services/firebase'
 
-export default class BaseDal {
+import { db, firebaseIns } from '@/services/firebase'
+import { IBaseService } from '..'
+
+export class BaseService implements IBaseService {
   collectionName: string;
 
   get getDb () {
@@ -20,8 +21,9 @@ export default class BaseDal {
     this.collectionName = collectionName
   }
 
-  async insert <T> (arg: T):Promise<string|void> {
-    return await this.getCollection.add({ ...arg, createdDate: this.getTimestamp(), updatedDate: this.getTimestamp() })
+  async insert <T> (arg: T):Promise<any> {
+    const data = { ...arg, createdDate: this.getTimestamp(), updatedDate: this.getTimestamp() }
+    return await this.getCollection.add(data)
       .then(docRef => docRef.id)
       .catch((error) => {
         throw new Error(error)
@@ -29,7 +31,9 @@ export default class BaseDal {
   }
 
   async update (arg: any):Promise<any> {
-    return await this.getCollection.doc(arg.id).set({ ...arg, updatedDate: this.getTimestamp() }, { merge: true })
+    const o = JSON.parse(JSON.stringify(arg))
+    delete o.id
+    return await this.getCollection.doc(arg.id).set({ ...o, updatedDate: this.getTimestamp() }, { merge: true })
       .then(() => true)
       .catch((error) => {
         throw new Error(error)
@@ -44,7 +48,7 @@ export default class BaseDal {
       })
   }
 
-  async getAll () {
+  async getAll ():Promise<any> {
     return await this.getCollection.orderBy('updatedDate', 'desc').get()
       .then(docRef => this.addDocIdToSnapshot(docRef))
       .catch((error) => {
@@ -72,4 +76,3 @@ export default class BaseDal {
     return result
   }
 }
- */

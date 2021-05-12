@@ -23,7 +23,9 @@ export const firebaseIns = firebase
 export const Auth = firebase.auth()
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
+export const FacebookProvider = new firebase.auth.FacebookAuthProvider()
 
 if (window.location.hostname === 'localhost') {
   db.useEmulator('localhost', 8080)
+  Auth.useEmulator('http://localhost:9099')
 }

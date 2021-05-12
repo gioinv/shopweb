@@ -22,13 +22,13 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <!--<v-divider />
-       <div align="center" class="mt-3">
-        <v-btn color="primary" @click="onSync">
-          <v-icon>mdi-sync-circle</v-icon>
-          Sync
+      <v-divider />
+      <div align="center" class="mt-3">
+        <v-btn color="primary" @click="onLogout">
+          <v-icon>mdi-logout</v-icon>
+          {{ $t('common.logout') }}
         </v-btn>
-      </div> -->
+      </div>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
@@ -57,6 +57,9 @@
 import { Component, mixins } from 'nuxt-property-decorator'
 import { PageMethods } from '@/mixins/Common'
 import MSnackbar from '@/components/controls/MSnackbar.vue'
+import { Inject } from 'inversify-props'
+import type { IAuthService } from '~/api/services'
+import 'reflect-metadata'
 
 @Component({
   components: {
@@ -65,6 +68,9 @@ import MSnackbar from '@/components/controls/MSnackbar.vue'
 
 })
 export default class Admin extends mixins(PageMethods) {
+  @Inject()
+  private authService!: IAuthService
+
   clipped:boolean= false
   drawer:boolean= !this.$vuetify.breakpoint.smAndDown
   fixed:boolean= false
@@ -76,6 +82,11 @@ export default class Admin extends mixins(PageMethods) {
       to: '/administration'
     },
     {
+      icon: 'mdi-account',
+      title: this.$t('common.user'),
+      to: '/administration/users'
+    },
+    {
       icon: 'mdi-format-list-bulleted',
       title: this.$t('common.category'),
       to: '/administration/categories'
@@ -85,9 +96,15 @@ export default class Admin extends mixins(PageMethods) {
       title: this.$t('common.product'),
       to: '/administration/products'
     }
+
   ]
 
-  created () {
+  onLogout () {
+    this.gotoPage('/user/logout/?redirect=/administration/login')
+  }
+
+  async created () {
+    // await this.setCategory()
   }
 }
 

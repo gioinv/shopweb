@@ -6,6 +6,7 @@
   },
   "common": {
     "login": "Đăng nhập",
+    "logout": "Đăng xuất",
     "my_account": "Tài khoản của tôi",
     "user": "Người dùng",
     "category":"Danh mục",

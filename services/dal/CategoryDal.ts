@@ -1,4 +1,4 @@
-
+/*
 import BaseDal from './BaseDal'
 
 export default class CategoryDal extends BaseDal {
@@ -16,3 +16,4 @@ export default class CategoryDal extends BaseDal {
     return await batch.commit()
   }
 }
+ */

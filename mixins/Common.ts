@@ -1,4 +1,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
+import Constants from '~/utils/Constants'
 @Component({
 
 })
@@ -69,6 +70,10 @@ class PageMethods extends Vue {
     } else {
       return this.$t(key, [parms])
     }
+  }
+
+  get APP_NAME ():string {
+    return Constants.APP_NAME
   }
 }
 

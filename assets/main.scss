@@ -9,6 +9,20 @@
 * {
   font-family: myFirstFont;
 }
+a:link, a:active, a:visited {
+  text-decoration: underline;
+  color: #0072ff  !important;
+}
+a:hover{
+  text-decoration: none;
+}
+
+.theme--light.v-card > .v-card__text, .theme--light.v-card .v-card__subtitle{
+  color:#333 !important
+}
+.v-sheet.v-list a{
+  text-decoration: none !important;
+}
 
 .v-application ul, .v-application ol {
   padding-left: 0px !important;
@@ -292,3 +306,4 @@ $line-color: rgb(206, 206, 206);
 .break-line{
   white-space: pre-line;
 }
+

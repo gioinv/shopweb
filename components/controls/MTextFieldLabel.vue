@@ -1,11 +1,14 @@
 /* eslint-disable vue/require-prop-types */
 <template>
   <ValidationProvider v-slot="{ errors }" :vid="vid" :rules="rules">
+    <div style="margin-bottom:2px">
+      {{ label }} <span v-if="isRequired && !disabled" class="error--text">*</span>
+    </div>
     <v-text-field
       outlined
+
       :disabled="disabled"
       :append-icon="appendIcon"
-      :label="label"
       :counter="counter"
       :placeholder="placeHolder"
       :autocomplete="autocomplete"
@@ -16,14 +19,14 @@
       :maxlength="maxLength || counter"
       :type="type"
       dense
+
       :hide-details="hideDetails"
       @input="$emit('input', $event)"
       @keyup="$emit('keyup', $event)"
       @blur="$emit('blur', $event)"
     >
-      <template #label>
-        {{ label }}
-        <span v-if="isRequired && !disabled" class="error--text">*</span>
+      <template slot="append">
+        <slot name="append" />
       </template>
     </v-text-field>
   </ValidationProvider>
@@ -36,7 +39,7 @@ import { ValidationProvider } from 'vee-validate'
     ValidationProvider
   }
 })
-export default class MButton extends Vue {
+export default class MTextFieldLabel extends Vue {
   @Prop({ default: '' }) value!: any
   @Prop({ default: '' }) placeHolder!: string
   @Prop({ default: '' }) label!: string
@@ -45,6 +48,7 @@ export default class MButton extends Vue {
   @Prop({ default: '' }) vid!: string
   @Prop({ default: '' }) type!: string
   @Prop({ default: '' }) autocomplete!: string
+  @Prop({ default: '' }) appendSlot!: string
   @Prop({ default: null }) counter!: number
   @Prop({ default: null }) maxLength!: any
   @Prop({ required: false, default: false }) disabled!: boolean
